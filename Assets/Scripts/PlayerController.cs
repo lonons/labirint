@@ -3,6 +3,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public float Speed
+    {
+        get => _speed;
+        set => _speed = value;
+    }
+
     [SerializeField] private float _speed;
 
     private Rigidbody _rb;
@@ -28,4 +34,7 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = _rb.transform.TransformDirection(_directional * _speed);
         _rb.AddForce(dir, ForceMode.Force);
     }
+
+
+    
 }
