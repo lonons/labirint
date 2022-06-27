@@ -2,8 +2,13 @@
 using UnityEngine;
 namespace Labirint
 {
+    public delegate void HpDelegate();
+
     public class SystemHp : MonoBehaviour
     {
+        private Observer _observer = new Observer();
+        private UIHp _uiHp = new UIHp();
+
         [SerializeField] private float maxHp = 100;
         private float _hp;
         public float MaxHp
@@ -25,12 +30,18 @@ namespace Labirint
                 {
                     Death();
                 }
+                _observer.OnChanged();
             }
         }
 
         private void Awake()
         {
             _hp = maxHp;
+        }
+
+        private void Start()
+        {
+            _observer.AddFunc(_uiHp.UpdateUIHp);   
         }
 
         private void Death()
