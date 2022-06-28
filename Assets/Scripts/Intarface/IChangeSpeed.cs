@@ -2,7 +2,7 @@ namespace Labirint
 {
     public interface IChangeSpeed
     {
-        float ChangeSpeed(float Speed);
+        void ChangeSpeed(float speedBonus);
     }
 }
 

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Labirint
 {
-    public class SpeedBonus : MonoBehaviour, IChangeSpeed
+    public class SpeedBonus : MonoBehaviour
     {
         [SerializeField] private float _speedBonus;
         private void OnTriggerEnter(Collider other)
@@ -10,15 +10,11 @@ namespace Labirint
 
             if (other.CompareTag("Player"))
             {
-                var playerController = other.GetComponent<PlayerController>();
-                playerController.Speed = ChangeSpeed(playerController.Speed);
-                Debug.Log(playerController.Speed);
+                if (other.TryGetComponent(out IChangeSpeed _changeSpeed))
+                {
+                    _changeSpeed.ChangeSpeed(_speedBonus);
+                }
             }
-        }
-
-        public float ChangeSpeed(float speed)
-        {
-            return speed += _speedBonus;
         }
     }
 

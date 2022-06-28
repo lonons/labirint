@@ -4,7 +4,7 @@ namespace Labirint
 {
     public delegate void HpDelegate();
 
-    public class SystemHp : MonoBehaviour
+    public class SystemHp : MonoBehaviour, IChangeHp
     {
         private Observer _observer = new Observer();
         private UIHp _uiHp = new UIHp();
@@ -47,6 +47,12 @@ namespace Labirint
         private void Death()
         {
             Destroy(gameObject);
+        }
+
+        public void ChangeHp(float hpbonus)
+        {
+            Hp += hpbonus;
+            Debug.Log(Hp);
         }
     }
 }

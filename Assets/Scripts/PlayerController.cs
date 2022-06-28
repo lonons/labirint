@@ -4,7 +4,7 @@ namespace Labirint
 {
 
     [RequireComponent(typeof(Rigidbody))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IChangeSpeed
     {
         public float Speed
         {
@@ -42,7 +42,11 @@ namespace Labirint
             _rb.AddForce(dir, ForceMode.Force);
         }
 
-
+        public void ChangeSpeed(float _speedBonus)
+        {
+            Speed += _speedBonus;
+            Debug.Log(_speed);
+        }
 
     }
 

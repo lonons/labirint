@@ -3,23 +3,19 @@ using static UnityEngine.Debug;
 
 namespace Labirint
 {
-    public class HpBonus : MonoBehaviour, IChangeHp
+    public class HpBonus : MonoBehaviour
     {
         [SerializeField] private float _hpBonus;
         private void OnTriggerEnter(Collider other)
         {
 
             if (other.CompareTag("Player"))
-            {
-                var playerController = other.GetComponent<SystemHp>();
-                playerController.Hp = ChangeHp(playerController.Hp);
-                Log(playerController.Hp);
+            { 
+                if (other.TryGetComponent(out IChangeHp _changeHP))
+                {
+                    _changeHP.ChangeHp(_hpBonus);
+                }
             }
-        }
-
-        public float ChangeHp(float hp)
-        {
-            return hp += _hpBonus;
         }
     }
 

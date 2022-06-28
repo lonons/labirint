@@ -2,7 +2,7 @@ namespace Labirint
 {
     public interface IChangeHp
     {
-        float ChangeHp(float hp);
+        void ChangeHp(float hpbonus);
     }
 }
 
