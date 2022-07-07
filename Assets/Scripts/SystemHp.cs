@@ -3,11 +3,14 @@ using UnityEngine;
 namespace Labirint
 {
     public delegate void HpDelegate();
+    public delegate void DeathDelegate();
 
     public class SystemHp : MonoBehaviour, IChangeHp
     {
         private Observer _observer = new Observer();
         private UIHp _uiHp = new UIHp();
+        private GameController _gameController;
+        private DeathDelegate _deathDelegate;
 
         [SerializeField] private float maxHp = 100;
         private float _hp;
@@ -28,7 +31,7 @@ namespace Labirint
                 }
                 if (_hp <= 0)
                 {
-                    Death();
+                    _deathDelegate?.Invoke();
                 }
                 _observer.OnChanged();
             }
@@ -36,17 +39,16 @@ namespace Labirint
 
         private void Awake()
         {
+            GameObject go = GameObject.Find("GameControllerObject");
+            _gameController = go.GetComponent<GameController>();
+                
             _hp = maxHp;
         }
 
         private void Start()
         {
-            _observer.AddFunc(_uiHp.UpdateUIHp);   
-        }
-
-        private void Death()
-        {
-            Destroy(gameObject);
+            _observer.AddFunc(_uiHp.UpdateUIHp);
+            _deathDelegate += _gameController.GameOver;
         }
 
         public void ChangeHp(float hpbonus)
